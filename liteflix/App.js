@@ -1,112 +1,133 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- *
- * @format
- * @flow strict-local
- */
-
 import React from 'react';
-import type {Node} from 'react';
 import {
-  SafeAreaView,
-  ScrollView,
+  Text,
+  View,
   StatusBar,
   StyleSheet,
-  Text,
-  useColorScheme,
-  View,
+  Image,
+  ScrollView,
 } from 'react-native';
+import {NavigationContainer} from '@react-navigation/native';
+import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
+import Home from './icons/Home';
+import Favorite from './icons/Favorite';
+import Camera from './icons/Camera';
+import User from './icons/User';
+import Search from './icons/Search';
+import Header from './components/Header';
 
-import {
-  Colors,
-  DebugInstructions,
-  Header,
-  LearnMoreLinks,
-  ReloadInstructions,
-} from 'react-native/Libraries/NewAppScreen';
+const image = {
+  uri: 'https://image.tmdb.org/t/p/w500/1g0dhYtq4irTY1GPXvft6k4YLjm.jpg',
+};
 
-const Section = ({children, title}): Node => {
-  const isDarkMode = useColorScheme() === 'dark';
+function HomeScreen() {
   return (
-    <View style={styles.sectionContainer}>
-      <Text
-        style={[
-          styles.sectionTitle,
-          {
-            color: isDarkMode ? Colors.white : Colors.black,
-          },
-        ]}>
-        {title}
-      </Text>
-      <Text
-        style={[
-          styles.sectionDescription,
-          {
-            color: isDarkMode ? Colors.light : Colors.dark,
-          },
-        ]}>
-        {children}
-      </Text>
+    <ScrollView vertical stickyHeaderIndices={[0]}>
+      <Header />
+      <Image source={image} resizeMode="cover" style={styles.image} />
+      <View style={{backgroundColor: '#242424', height: 300}}>
+      </View>
+    </ScrollView>
+  );
+}
+
+function FavoriteScreen() {
+  return (
+    <View>
+      <Text>Home</Text>
     </View>
   );
-};
-
-const App: () => Node = () => {
-  const isDarkMode = useColorScheme() === 'dark';
-
-  const backgroundStyle = {
-    backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
-  };
-
+}
+function CameraScreen() {
   return (
-    <SafeAreaView style={backgroundStyle}>
-      <StatusBar barStyle={isDarkMode ? 'light-content' : 'dark-content'} />
-      <ScrollView
-        contentInsetAdjustmentBehavior="automatic"
-        style={backgroundStyle}>
-        <Header />
-        <View
-          style={{
-            backgroundColor: isDarkMode ? Colors.black : Colors.white,
-          }}>
-          <Section title="Step One">
-            Edit <Text style={styles.highlight}>App.js</Text> to change this
-            screen and then come back to see your edits.
-          </Section>
-          <Section title="See Your Changes">
-            <ReloadInstructions />
-          </Section>
-          <Section title="Debug">
-            <DebugInstructions />
-          </Section>
-          <Section title="Learn More">
-            Read the docs to discover what to do next:
-          </Section>
-          <LearnMoreLinks />
-        </View>
-      </ScrollView>
-    </SafeAreaView>
+    <View>
+      <Text>Home</Text>
+    </View>
   );
-};
+}
 
+function UserScreen() {
+  return (
+    <View>
+      <Text>Home</Text>
+    </View>
+  );
+}
+function SearchScreen() {
+  return (
+    <View>
+      <Text>Home</Text>
+    </View>
+  );
+}
+
+const Tab = createBottomTabNavigator();
+
+export default function App() {
+  return (
+    <NavigationContainer>
+      <StatusBar backgroundColor="transparent" translucent={true} />
+      <Tab.Navigator
+        initialRouteName="Home"
+        screenOptions={{
+          headerShown: false,
+          tabBarActiveTintColor: '#fff',
+          tabBarInactiveTintColor: '#A7A7A7',
+          tabBarStyle: {
+            backgroundColor: '#242424',
+            height: 60,
+            borderTopWidth: 0,
+          },
+        }}>
+        <Tab.Screen
+          name="Home"
+          component={HomeScreen}
+          options={{
+            tabBarShowLabel: false,
+            tabBarIcon: ({color}) => <Home color={color} />,
+          }}
+        />
+        <Tab.Screen
+          name="Favorite"
+          component={FavoriteScreen}
+          options={{
+            tabBarShowLabel: false,
+            tabBarIcon: ({color}) => <Favorite color={color} />,
+          }}
+        />
+        <Tab.Screen
+          name="Search"
+          component={SearchScreen}
+          options={{
+            tabBarShowLabel: false,
+            tabBarIcon: ({color}) => <Search color={color} />,
+          }}
+        />
+        <Tab.Screen
+          name="Camera"
+          component={CameraScreen}
+          options={{
+            tabBarShowLabel: false,
+            tabBarIcon: ({color}) => <Camera color={color} />,
+          }}
+        />
+        <Tab.Screen
+          name="User"
+          component={UserScreen}
+          options={{
+            tabBarShowLabel: false,
+            tabBarIcon: ({color}) => <User color={color} />,
+          }}
+        />
+      </Tab.Navigator>
+    </NavigationContainer>
+  );
+}
 const styles = StyleSheet.create({
-  sectionContainer: {
-    marginTop: 32,
-    paddingHorizontal: 24,
-  },
-  sectionTitle: {
-    fontSize: 24,
-    fontWeight: '600',
-  },
-  sectionDescription: {
-    marginTop: 8,
-    fontSize: 18,
-    fontWeight: '400',
-  },
-  highlight: {
-    fontWeight: '700',
+  container: {},
+  image: {
+    width: '100%',
+    height: 700,
+    justifyContent: 'flex-end',
   },
 });
-
-export default App;
