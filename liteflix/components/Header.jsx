@@ -11,7 +11,13 @@ export default function Header() {
 
 const styles = StyleSheet.create({
   contain: {
-    height: 60,
+    height: 80,
+    // backgroundColor: 'rgba(52, 52, 52, 0.8)',
     backgroundColor: 'red',
+    width: 100,
+    justifyContent: 'center',
+    alignItems: 'center',
+    position: 'absolute',
+    top: 0,
   },
 });
