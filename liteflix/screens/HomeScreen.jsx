@@ -12,6 +12,7 @@ import LinearGradient from 'react-native-linear-gradient';
 import Icon from 'react-native-vector-icons/Ionicons';
 import Plus from 'react-native-vector-icons/Fontisto';
 import AddIcon from 'react-native-vector-icons/SimpleLineIcons';
+import MovieCard from '../components/MovieCard';
 
 const image = {
   uri: 'https://image.tmdb.org/t/p/w500/1g0dhYtq4irTY1GPXvft6k4YLjm.jpg',
@@ -66,7 +67,10 @@ export default function HomeScreen({navigation}) {
           </TouchableOpacity>
         </View>
       </View>
-      <ScrollView vertical showsVerticalScrollIndicator={false}>
+      <ScrollView
+        vertical
+        showsVerticalScrollIndicator={false}
+        style={{height: '100%'}}>
         <ImageBackground
           source={image}
           resizeMode="cover"
@@ -175,7 +179,6 @@ export default function HomeScreen({navigation}) {
         <View
           style={{
             backgroundColor: '#242424',
-            height: 400,
             alignItems: 'center',
           }}>
           <TouchableOpacity
@@ -200,14 +203,13 @@ export default function HomeScreen({navigation}) {
           {choice === 'Populares' ? (
             <View
               style={{
-                backgroundColor: 'white',
-                height: 400,
-                width: '80%',
-                // width: 330,
+                width: '90%',
+                marginTop: 10,
               }}>
-              <View style={{marginHorizontal: 20}}>
-                <Text>Populares</Text>
-              </View>
+              <MovieCard />
+              <MovieCard />
+              <MovieCard />
+              <MovieCard />
             </View>
           ) : (
             <View style={{backgroundColor: 'green', height: 400, width: 270}}>
@@ -276,6 +278,6 @@ const styles = StyleSheet.create({
     width: '100%',
     height: 650,
     justifyContent: 'center',
-    backgroundColor: 'rgb(0, 0, 0)',
+    // backgroundColor: 'rgb(0, 0, 0)',
   },
 });

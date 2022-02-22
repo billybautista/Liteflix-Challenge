@@ -1,23 +1,44 @@
-import {StyleSheet, Text, View} from 'react-native';
 import React from 'react';
+import {StyleSheet, Text, View, TouchableOpacity, Image} from 'react-native';
+import AddIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 
-export default function Header() {
+export default function Header({navigation}) {
   return (
-    <View style={styles.contain}>
-      <Text>Header</Text>
+    <View style={styles.root}>
+      <View style={styles.container}>
+        <TouchableOpacity onPress={() => navigation.navigate('Home')}>
+          <AddIcon name="text" size={40} color="white" />
+        </TouchableOpacity>
+        <Text style={styles.text}>LiteFlix</Text>
+        <TouchableOpacity onPress={() => alert('Profile')}>
+          <Image
+            source={require('../assets/Perfil.png')}
+            style={{height: 40, width: 40}}
+          />
+        </TouchableOpacity>
+      </View>
     </View>
   );
 }
 
 const styles = StyleSheet.create({
-  contain: {
-    height: 80,
-    // backgroundColor: 'rgba(52, 52, 52, 0.8)',
-    backgroundColor: 'red',
-    width: 100,
+  root: {
+    width: '100%',
+    marginTop: 40,
+    height: 60,
     justifyContent: 'center',
+  },
+  container: {
+    marginHorizontal: 20,
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
     alignItems: 'center',
-    position: 'absolute',
-    top: 0,
+  },
+  text: {
+    fontFamily: 'BebasNeue-Regular',
+    fontSize: 40,
+    color: '#64EEBC',
+    letterSpacing: 5,
   },
 });
