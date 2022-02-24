@@ -1,5 +1,11 @@
 import React, {useState, useContext, useEffect} from 'react';
-import {View, Text, TextInput, TouchableOpacity} from 'react-native';
+import {
+  View,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  ActivityIndicator,
+} from 'react-native';
 import FilePicker from '../components/FilePicker';
 import Header from '../components/Header';
 
@@ -12,6 +18,7 @@ export default function CameraScreen({navigation}) {
   const {file, setFile, loading, setLoading} = useContext(MovieContext);
   const [text, onChangeText] = useState('');
   const films = [];
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     const unsubscribe = navigation.addListener('blur', () => {
@@ -36,8 +43,10 @@ export default function CameraScreen({navigation}) {
     }
   };
   const handleSubmit = async () => {
+    setIsLoading(true);
     const image = await handleUpload();
     const filmList = await getData('@film');
+
     if (filmList !== null) {
       filmList.push({film: image, title: text});
       await storeData('@film', filmList);
@@ -45,10 +54,25 @@ export default function CameraScreen({navigation}) {
       films.push({film: image, title: text});
       await storeData('@film', films);
     }
+    setIsLoading(false);
     navigation.navigate('SuccessScreen', {
       title: text,
     });
   };
+
+  if (isLoading) {
+    return (
+      <View
+        style={{
+          flex: 1,
+          backgroundColor: '#242424',
+          alignItems: 'center',
+          justifyContent: 'center',
+        }}>
+        <ActivityIndicator size="large" color="#00AA9D" />
+      </View>
+    );
+  }
 
   return (
     <View

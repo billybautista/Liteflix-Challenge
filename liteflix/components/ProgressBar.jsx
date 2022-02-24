@@ -7,7 +7,7 @@ import StatusLoading from './StatusLoading';
 import Title from './Title';
 
 let interval;
-export default function ProgressBar2() {
+export default function ProgressBar() {
   const [running, setRunning] = useState(true);
   const [progress, setProgress] = useState(0);
   const {file, setFile, setLoading, loading} = useContext(MovieContext);
