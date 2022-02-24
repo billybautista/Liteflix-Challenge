@@ -35,21 +35,12 @@ export default function HomeScreen({navigation}) {
     setShowDropdown(false);
   };
 
-  const removeValue = async () => {
-    try {
-      await AsyncStorage.clear();
-    } catch (e) {
-      // remove error
-    }
-    console.log('Done.');
-  };
-
   const onRefresh = async () => {
     setRefreshing(true);
     await get4PopularMovies();
     await getBackground();
     await getFilms();
-    console.log('refreshed');
+
     setRefreshing(false);
   };
 
@@ -81,16 +72,6 @@ export default function HomeScreen({navigation}) {
     setPopularMovies(res.results.slice(1, 5));
   };
 
-  const handleGetData = async () => {
-    await removeValue();
-    const data = await getData('@film');
-    console.log('data =>', data);
-    console.log('Hola');
-  };
-
-  const image = {
-    uri: 'https://image.tmdb.org/t/p/w500/3G1Q5xF40HkUBJXxt2DQgQzKTp5.jpg',
-  };
   return (
     <>
       <View
@@ -187,7 +168,6 @@ export default function HomeScreen({navigation}) {
                 </Text>
               </View>
               <TouchableOpacity
-                onPress={handleGetData}
                 style={{
                   backgroundColor: '#242424',
                   height: 60,

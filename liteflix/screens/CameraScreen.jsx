@@ -29,7 +29,7 @@ export default function CameraScreen({navigation}) {
         const image = upload.secure_url;
         return image;
       } else {
-        console.log('Archivo no es una imagen');
+        console.log('el Archivo no es una imagen');
       }
     } catch (error) {
       console.log('error');
@@ -147,8 +147,6 @@ export default function CameraScreen({navigation}) {
           )}
           <TouchableOpacity
             onPress={() => navigation.navigate('Home')}
-            // onPress={() => navigation.navigate('SuccessScreen')}
-            // onPress={handleGetData}
             style={{
               width: '80%',
               height: 60,

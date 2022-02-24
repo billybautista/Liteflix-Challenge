@@ -1,12 +1,5 @@
-import React, {useState} from 'react';
-import {
-  StyleSheet,
-  Text,
-  View,
-  ImageBackground,
-  TouchableOpacity,
-  PixelRatio,
-} from 'react-native';
+import React from 'react';
+import {Text, View, ImageBackground, TouchableOpacity} from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
 
 import Play from 'react-native-vector-icons/EvilIcons';
@@ -52,7 +45,6 @@ export default function MovieCard({
                 <View
                   style={{
                     flexDirection: 'row',
-
                     alignItems: 'center',
                   }}>
                   <Play name="play" size={60} color="white" />
@@ -70,7 +62,6 @@ export default function MovieCard({
                   style={{
                     flexDirection: 'row',
                     justifyContent: 'space-between',
-
                     marginTop: 30,
                   }}>
                   <View style={{flexDirection: 'row', alignItems: 'center'}}>
@@ -140,5 +131,3 @@ export default function MovieCard({
     </TouchableOpacity>
   );
 }
-
-const styles = StyleSheet.create({});

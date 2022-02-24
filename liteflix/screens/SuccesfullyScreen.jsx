@@ -4,7 +4,6 @@ import Header from '../components/Header';
 
 export default function SuccesfullyScreen({navigation, route}) {
   const {title} = route.params;
-  console.log('Title ==> ', title);
 
   useEffect(() => {
     const unsubscribe = navigation.addListener('blur', () => {

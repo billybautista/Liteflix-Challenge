@@ -1,7 +1,7 @@
-import {StyleSheet, Text, View} from 'react-native';
 import React from 'react';
+import {Text, View} from 'react-native';
 
-export default function StatusLoading({title, progress, status}) {
+export default function StatusLoading({title, progress}) {
   return (
     <View style={{display: 'flex', flexDirection: 'row', marginBottom: 20}}>
       <Text
@@ -26,5 +26,3 @@ export default function StatusLoading({title, progress, status}) {
     </View>
   );
 }
-
-const styles = StyleSheet.create({});

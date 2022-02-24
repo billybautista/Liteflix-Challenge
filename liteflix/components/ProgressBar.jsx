@@ -1,5 +1,5 @@
 import React, {useEffect, useState, useContext} from 'react';
-import {View, TouchableOpacity, Text} from 'react-native';
+import {View} from 'react-native';
 import {MovieContext} from '../context/MovieContext';
 import FilmButton from './FilmButton';
 import ProgressStatus from './ProgressStatus';
@@ -27,7 +27,6 @@ export default function ProgressBar2() {
 
   useEffect(() => {
     if (progress === 100) {
-      console.log(loading);
       setLoading(false);
       setRunning(false);
       clearInterval(interval);
@@ -108,76 +107,6 @@ export default function ProgressBar2() {
           )}
         </>
       )}
-
-      {/* <View
-        style={{
-          marginTop: 20,
-          width: '100%',
-
-          alignItems: 'flex-end',
-        }}>
-        {progress < 100 ? (
-          <TouchableOpacity
-            onPress={() => {
-              setRunning(false);
-              setProgress(0);
-              setFile(null);
-            }}>
-            <Text
-              style={{
-                fontFamily: 'BebasNeue-Regular',
-                fontSize: 20,
-                letterSpacing: 3,
-                color: 'white',
-              }}>
-              Cancelar
-            </Text>
-          </TouchableOpacity>
-        ) : type === 'image' ? (
-          <Text
-            style={{
-              fontFamily: 'BebasNeue-Regular',
-              fontSize: 20,
-              letterSpacing: 5,
-              color: '#64EEBC',
-            }}>
-            ¡Listo!
-          </Text>
-        ) : (
-          <TouchableOpacity
-            onPress={() => {
-              setRunning(false);
-              setProgress(0);
-              setFile(null);
-            }}>
-            <Text
-              style={{
-                fontFamily: 'BebasNeue-Regular',
-                fontSize: 20,
-                letterSpacing: 3,
-                color: 'white',
-              }}>
-              Reintentar
-            </Text>
-          </TouchableOpacity>
-        )}
-      </View> */}
-
-      {/* <View style={{marginBottom: 60}} /> */}
-      {/* <TouchableOpacity
-        onPress={() => {
-          setFile(null);
-        }}>
-        <Text
-          style={{
-            fontFamily: 'BebasNeue-Regular',
-            fontSize: 20,
-            letterSpacing: 3,
-            color: 'white',
-          }}>
-          Clear file
-        </Text>
-      </TouchableOpacity> */}
     </View>
   );
 }
