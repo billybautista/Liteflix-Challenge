@@ -1,12 +1,16 @@
 import React, {useEffect, useState, useContext} from 'react';
 import {View, TouchableOpacity, Text} from 'react-native';
 import {MovieContext} from '../context/MovieContext';
+import FilmButton from './FilmButton';
+import ProgressStatus from './ProgressStatus';
+import StatusLoading from './StatusLoading';
+import Title from './Title';
 
 let interval;
-export default function ProgressBar() {
+export default function ProgressBar2() {
   const [running, setRunning] = useState(true);
   const [progress, setProgress] = useState(0);
-  const {file, setFile} = useContext(MovieContext);
+  const {file, setFile, setLoading, loading} = useContext(MovieContext);
 
   const type = file.type.split('/')[0];
 
@@ -23,6 +27,8 @@ export default function ProgressBar() {
 
   useEffect(() => {
     if (progress === 100) {
+      console.log(loading);
+      setLoading(false);
       setRunning(false);
       clearInterval(interval);
     }
@@ -30,95 +36,80 @@ export default function ProgressBar() {
 
   return (
     <View>
-      {progress < 100 ? (
-        <View style={{display: 'flex', flexDirection: 'row', marginBottom: 20}}>
-          <Text
-            style={{
-              fontSize: 20,
-              fontFamily: 'BebasNeue-Regular',
-              color: 'white',
-              letterSpacing: 5,
-              marginRight: 10,
-            }}>
-            Cargando
-          </Text>
-          <Text
-            style={{
-              fontSize: 20,
-              fontFamily: 'BebasNeue-Regular',
-              color: 'white',
-              letterSpacing: 5,
-            }}>
-            {progress} %
-          </Text>
-        </View>
-      ) : (
-        <View style={{marginBottom: 20}}>
-          {type === 'image' ? (
-            <Text
-              style={{
-                fontSize: 20,
-                fontFamily: 'BebasNeue-Regular',
-                color: 'white',
-                letterSpacing: 5,
-                marginRight: 10,
-              }}>
-              100% cargado
-            </Text>
+      {type === 'image' ? (
+        <>
+          {progress < 100 ? (
+            <>
+              <StatusLoading title="Cargando" progress={progress} />
+              <ProgressStatus progress={progress} color="#64EEBC" />
+              <FilmButton
+                title="Cancelar"
+                top={20}
+                align="flex-end"
+                onPress={() => {
+                  setRunning(false);
+                  setProgress(0);
+                  setFile(null);
+                }}
+              />
+            </>
           ) : (
-            <Text
-              style={{
-                fontSize: 20,
-                fontFamily: 'BebasNeue-Regular',
-                color: 'white',
-                letterSpacing: 3,
-                marginRight: 10,
-              }}>
-              ¡ERROR! no se pudo cargar la película
-            </Text>
+            <>
+              <Title title="100% Cargado" down={20} />
+              <ProgressStatus progress={progress} color="#64EEBC" />
+              <Title
+                title="¡Listo!"
+                top={20}
+                color="#64EEBC"
+                align="flex-end"
+              />
+            </>
           )}
-        </View>
+        </>
+      ) : (
+        <>
+          {progress < 100 ? (
+            <>
+              <StatusLoading title="Cargando" progress={progress} />
+              <ProgressStatus progress={progress} color="#64EEBC" />
+              <FilmButton
+                title="Cancelar"
+                top={20}
+                align="flex-end"
+                onPress={() => {
+                  setRunning(false);
+                  setProgress(0);
+                  setFile(null);
+                }}
+              />
+            </>
+          ) : (
+            <>
+              <Title
+                title="¡Error no se pudo cargar la pelicula"
+                down={20}
+                spacing={3}
+              />
+              <ProgressStatus
+                progress={progress}
+                color={progress === 100 ? 'red' : '#64EEBC'}
+              />
+              <FilmButton
+                title="Reintentar"
+                top={20}
+                align="flex-end"
+                onPress={() => {
+                  setRunning(false);
+                  setProgress(0);
+                  setFile(null);
+                }}
+              />
+            </>
+          )}
+        </>
       )}
 
-      <View
-        style={{
-          backgroundColor: '#e4e4e4',
-          width: '100%',
-          height: 10,
-          borderRadius: 5,
-        }}>
-        {progress === 100 ? (
-          type === 'image' ? (
-            <View
-              style={{
-                backgroundColor: '#64EEBC',
-                height: 10,
-                borderRadius: 5,
-                width: `${progress}%`,
-              }}
-            />
-          ) : (
-            <View
-              style={{
-                backgroundColor: 'red',
-                height: 10,
-                borderRadius: 5,
-                width: `${progress}%`,
-              }}
-            />
-          )
-        ) : (
-          <View
-            style={{
-              backgroundColor: '#64EEBC',
-              height: 10,
-              borderRadius: 5,
-              width: `${progress}%`,
-            }}
-          />
-        )}
-      </View>
-      <View
+      {/* <View
         style={{
           marginTop: 20,
           width: '100%',
@@ -170,9 +161,10 @@ export default function ProgressBar() {
             </Text>
           </TouchableOpacity>
         )}
-      </View>
+      </View> */}
+
       {/* <View style={{marginBottom: 60}} /> */}
-      <TouchableOpacity
+      {/* <TouchableOpacity
         onPress={() => {
           setFile(null);
         }}>
@@ -185,7 +177,7 @@ export default function ProgressBar() {
           }}>
           Clear file
         </Text>
-      </TouchableOpacity>
+      </TouchableOpacity> */}
     </View>
   );
 }

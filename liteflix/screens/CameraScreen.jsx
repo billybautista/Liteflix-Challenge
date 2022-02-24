@@ -1,29 +1,33 @@
-import React, {useState, useContext, useRef} from 'react';
+import React, {useState, useContext, useEffect} from 'react';
 import {View, Text, TextInput, TouchableOpacity} from 'react-native';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import FilePicker from '../components/FilePicker';
 import Header from '../components/Header';
+
 import ProgressBar from '../components/ProgressBar';
 import {MovieContext} from '../context/MovieContext';
-import {cloudinaryUpload} from '../utils/uploadImage';
+import {uploadImage} from '../utils/uploadImage';
+import {getData, storeData} from '../utils/storage';
 
 export default function CameraScreen({navigation}) {
-  const {file, setFile} = useContext(MovieContext);
+  const {file, setFile, loading, setLoading} = useContext(MovieContext);
   const [text, onChangeText] = useState('');
-  const [image, setImage] = useState('');
-  // const image = useRef('');
+  const films = [];
+
+  useEffect(() => {
+    const unsubscribe = navigation.addListener('blur', () => {
+      setFile(null);
+      onChangeText('');
+      setLoading(true);
+    });
+    return unsubscribe;
+  }, [navigation]);
 
   const handleUpload = async () => {
     try {
       if (file.type.includes('image')) {
-        console.log('file', file);
-        const upload = await cloudinaryUpload(file);
-        console.log('upload', upload);
-        console.log('upload.secure_url', upload.secure_url);
+        const upload = await uploadImage(file);
         const image = upload.secure_url;
         return image;
-        // upload.secure_url && setImage(upload.secure_url);
-        // image.current = upload.secure_url;
       } else {
         console.log('Archivo no es una imagen');
       }
@@ -32,9 +36,18 @@ export default function CameraScreen({navigation}) {
     }
   };
   const handleSubmit = async () => {
-    const res = await handleUpload();
-    console.log('res', res);
-    console.log('handleUpload', text);
+    const image = await handleUpload();
+    const filmList = await getData('@film');
+    if (filmList !== null) {
+      filmList.push({film: image, title: text});
+      await storeData('@film', filmList);
+    } else {
+      films.push({film: image, title: text});
+      await storeData('@film', films);
+    }
+    navigation.navigate('SuccessScreen', {
+      title: text,
+    });
   };
 
   return (
@@ -90,10 +103,11 @@ export default function CameraScreen({navigation}) {
         <View style={{width: '100%', alignItems: 'center'}}>
           {file && file.type.includes('image') && text !== '' ? (
             <TouchableOpacity
+              disabled={loading}
               onPress={handleSubmit}
               style={{
                 width: '80%',
-                backgroundColor: 'white',
+                backgroundColor: loading ? '#a7a7a7' : 'white',
                 height: 60,
                 alignItems: 'center',
                 justifyContent: 'center',
@@ -132,12 +146,9 @@ export default function CameraScreen({navigation}) {
             </TouchableOpacity>
           )}
           <TouchableOpacity
-            // onPress={() => {
-            //   setFile(null);
-            //   onChangeText('');
-            //   navigation.navigate('Home');
-            // }}
-            onPress={handleGetData}
+            onPress={() => navigation.navigate('Home')}
+            // onPress={() => navigation.navigate('SuccessScreen')}
+            // onPress={handleGetData}
             style={{
               width: '80%',
               height: 60,

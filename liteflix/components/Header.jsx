@@ -10,7 +10,7 @@ export default function Header({navigation}) {
           <AddIcon name="text" size={40} color="white" />
         </TouchableOpacity>
         <Text style={styles.text}>LiteFlix</Text>
-        <TouchableOpacity onPress={() => alert('Profile')}>
+        <TouchableOpacity onPress={() => navigation.navigate('User')}>
           <Image
             source={require('../assets/Perfil.png')}
             style={{height: 40, width: 40}}
